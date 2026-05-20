@@ -1,29 +1,348 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Praveen Namdev Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praveen Namdev - Full Stack .NET Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff;
+    --surface: #fff8f4;
+    --surface2: #fff2ea;
+    --accent: #E65C00;
+    --accent2: #FF8C00;
+    --accent-deep: #C44A00;
+    --text: #1a1008;
+    --muted: #7a5c42;
+    --border: rgba(230,92,0,0.12);
+    --border2: rgba(230,92,0,0.25);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 3rem;
+    border-bottom: 1px solid var(--border2);
+    position: sticky; top: 0;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--accent); letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  section { scroll-margin-top: 72px; }
+
+  .hero { padding: 5rem 3rem 3.5rem; max-width: 900px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #fff2ea; border: 1px solid var(--border2);
+    border-radius: 100px; padding: 6px 14px;
+    font-size: 0.78rem; color: var(--accent-deep); font-weight: 600;
+    letter-spacing: 0.04em; margin-bottom: 1.5rem;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; display: inline-block; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 0.4rem; color: var(--text); }
+  .hero h1 span { color: var(--accent); }
+  .hero-role { font-size: 1rem; color: var(--muted); font-weight: 400; margin-bottom: 1.4rem; }
+  .hero-desc { font-size: 1rem; color: #5a3e2b; max-width: 580px; line-height: 1.75; margin-bottom: 2.5rem; font-weight: 300; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: white; border: none;
+    padding: 0.7rem 1.6rem; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 500; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; text-decoration: none; display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-secondary {
+    background: white; color: var(--accent);
+    border: 1.5px solid var(--accent);
+    padding: 0.7rem 1.6rem; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 500; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; text-decoration: none; display: inline-block;
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: #fff2ea; }
+
+  .info-strip {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    padding: 1.2rem 3rem;
+    background: var(--accent); max-width: 100%;
+  }
+  .info-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.84rem; color: rgba(255,255,255,0.85); }
+  .info-item strong { color: #fff; font-weight: 500; }
+
+  .section-wrap { max-width: 900px; margin: 0 auto; padding: 4rem 3rem; }
+  .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 2.5rem; color: var(--text); }
+
+  .skill-cat-label { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .skill-tag {
+    background: white; border: 1px solid var(--border2);
+    border-radius: 6px; padding: 6px 14px;
+    font-size: 0.83rem; color: #5a3e2b; font-weight: 400;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); background: #fff2ea; }
+  .skill-tag.highlight { border-color: var(--accent); color: var(--accent-deep); background: #fff2ea; font-weight: 500; }
+
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item { display: grid; grid-template-columns: 2px 1fr; gap: 0 1.5rem; padding-bottom: 2.5rem; }
+  .exp-item:last-child { padding-bottom: 0; }
+  .exp-line { background: var(--border2); position: relative; }
+  .exp-dot { position: absolute; top: 6px; left: -5px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2.5px solid white; box-shadow: 0 0 0 1px var(--accent); }
+  .exp-dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(230,92,0,0.2); }
+  .exp-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+  .exp-company { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); }
+  .exp-date { font-size: 0.78rem; color: var(--accent-deep); background: #fff2ea; border: 1px solid var(--border2); padding: 3px 10px; border-radius: 100px; white-space: nowrap; }
+  .exp-role { font-size: 0.88rem; color: var(--accent); font-weight: 500; margin-bottom: 0.7rem; }
+  .exp-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.7; }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .project-card {
+    background: white; border: 1px solid var(--border2);
+    border-radius: 12px; padding: 1.25rem;
+    transition: border-color 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent); opacity: 0; transition: opacity 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); }
+  .project-card:hover::before { opacity: 1; }
+  .proj-num { font-size: 0.7rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+  .proj-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); line-height: 1.3; }
+  .proj-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.8rem; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .proj-tag { font-size: 0.72rem; padding: 3px 9px; border-radius: 4px; background: #fff2ea; color: var(--accent-deep); border: 1px solid var(--border2); font-weight: 500; }
+
+  .edu-grid { display: grid; gap: 0.75rem; }
+  .edu-card {
+    background: white; border: 1px solid var(--border2); border-radius: 10px;
+    padding: 1rem 1.25rem; display: flex; justify-content: space-between;
+    align-items: center; gap: 1rem; flex-wrap: wrap;
+    border-left: 4px solid var(--accent);
+  }
+  .edu-deg { font-weight: 500; font-size: 0.95rem; color: var(--text); }
+  .edu-inst { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+  .edu-year { font-size: 0.82rem; color: var(--accent-deep); font-weight: 600; white-space: nowrap; }
+
+  .contact-box { background: var(--accent); border-radius: 16px; padding: 3rem; text-align: center; }
+  .contact-title { font-family: 'Syne', sans-serif; font-size: 1.7rem; font-weight: 800; margin-bottom: 0.5rem; color: white; }
+  .contact-sub { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 2rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px; padding: 0.65rem 1.2rem;
+    font-size: 0.85rem; color: white; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .contact-link:hover { background: rgba(255,255,255,0.25); }
+  .contact-link svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+  footer { border-top: 1px solid var(--border2); text-align: center; padding: 1.5rem; font-size: 0.8rem; color: var(--muted); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.2rem; } .nav-links { gap: 1rem; }
+    .hero, .section-wrap { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .info-strip { padding: 1rem 1.2rem; }
+    .hero h1 { font-size: 2.2rem; }
+  }
+</style>
 </head>
-<body style="font-family:Arial; padding:40px;">
-  <h1>Praveen Namdev</h1>
-  <h3>Full Stack .NET Developer</h3>
+<body>
 
-  <p>
-    Experienced developer with expertise in ASP.NET Core,
-    SQL Server, React, Angular, Android, and ERP solutions.
-  </p>
-
-  <h2>Skills</h2>
-  <ul>
-    <li>ASP.NET Core</li>
-    <li>SQL Server</li>
-    <li>React & Angular</li>
-    <li>Web API</li>
-    <li>Android Development</li>
+<nav>
+  <div class="nav-logo">PN</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
+</nav>
 
-  <h2>GitHub</h2>
-  <a href="https://github.com/praveennamdev">
-    github.com/praveennamdev
-  </a>
+<section id="hero">
+  <div class="hero">
+    <div class="hero-badge"><span class="dot"></span> Currently working &middot; Innoverve Inventions Pvt. Ltd.</div>
+    <h1>Praveen<br><span>Namdev</span></h1>
+    <p class="hero-role">Sr. Full Stack .NET Developer &nbsp;&middot;&nbsp; 5+ Years Experience</p>
+    <p class="hero-desc">Experienced in building scalable ERP systems, web applications, and REST APIs using ASP.NET Core, React, Angular, and SQL Server. Passionate about clean architecture and robust backend solutions.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<div class="info-strip">
+  <div class="info-item">&#128205; <strong>Indore, India</strong></div>
+  <div class="info-item">&#128222; <strong>9826486982</strong></div>
+  <div class="info-item">&#9993; <strong>praveennamdevpn@gmail.com</strong></div>
+  <div class="info-item">&#127470;&#127475; <strong>Indian National</strong></div>
+  <div class="info-item">&#128483; <strong>English &amp; Hindi</strong></div>
+</div>
+
+<hr class="divider">
+
+<section id="skills">
+  <div class="section-wrap fade-in">
+    <div class="section-label">Technical Expertise</div>
+    <div class="section-title">Skills &amp; Technologies</div>
+    <p class="skill-cat-label">Backend &amp; Frameworks</p>
+    <div class="skills-grid">
+      <span class="skill-tag highlight">ASP.NET Core</span><span class="skill-tag highlight">ASP.NET MVC</span><span class="skill-tag highlight">C#</span><span class="skill-tag">ADO.NET</span><span class="skill-tag">Web API</span><span class="skill-tag">Node.js</span><span class="skill-tag">Orchard Core</span><span class="skill-tag">Windows Services</span>
+    </div>
+    <p class="skill-cat-label">Frontend</p>
+    <div class="skills-grid">
+      <span class="skill-tag highlight">React.js</span><span class="skill-tag highlight">Angular 10</span><span class="skill-tag">TypeScript</span><span class="skill-tag">JavaScript</span><span class="skill-tag">HTML5</span><span class="skill-tag">JSON</span>
+    </div>
+    <p class="skill-cat-label">Database &amp; Tools</p>
+    <div class="skills-grid">
+      <span class="skill-tag highlight">SQL Server 2012-2022</span><span class="skill-tag">MySQL</span><span class="skill-tag">Visual Studio</span><span class="skill-tag">GitHub</span><span class="skill-tag">Postman</span><span class="skill-tag">Firebase</span><span class="skill-tag">IIS Server</span><span class="skill-tag">Azure</span><span class="skill-tag">Python</span><span class="skill-tag">FreeCAD</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="experience">
+  <div class="section-wrap fade-in">
+    <div class="section-label">Work History</div>
+    <div class="section-title">Professional Experience</div>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-line"><div class="exp-dot current"></div></div>
+        <div>
+          <div class="exp-top"><span class="exp-company">Innoverve Inventions Pvt. Ltd.</span><span class="exp-date">Aug 2025 - Present</span></div>
+          <div class="exp-role">Software Developer (Current)</div>
+          <p class="exp-desc">Working on enterprise-level software development projects including ERP modules and web application development.</p>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-line"><div class="exp-dot"></div></div>
+        <div>
+          <div class="exp-top"><span class="exp-company">Arna Softech</span><span class="exp-date">Feb 2025 - Jul 2025</span></div>
+          <div class="exp-role">Software Developer</div>
+          <p class="exp-desc">Contributing to software development projects using the .NET stack.</p>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-line"><div class="exp-dot"></div></div>
+        <div>
+          <div class="exp-top"><span class="exp-company">ITBIZ Software Solutions, Indore</span><span class="exp-date">Nov 2019 - Feb 2025</span></div>
+          <div class="exp-role">Sr. Software Developer &nbsp;&middot;&nbsp; 5+ Years</div>
+          <p class="exp-desc">Led development of Transport ERP and School ERP systems. Worked across full stack - ASP.NET, SQL Server, Web APIs, MVC, and Windows services. Also built US government platform using Orchard Core on Azure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="projects">
+  <div class="section-wrap fade-in">
+    <div class="section-label">Work Portfolio</div>
+    <div class="section-title">Key Projects</div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="proj-num">PROJECT 01</div>
+        <div class="proj-title">US Government Web Platform</div>
+        <div class="proj-desc">Form IO-based government system for a US client. Data migration, ESRI API integration, ASP.NET Core with Orchard Core on Azure.</div>
+        <div class="proj-tags"><span class="proj-tag">ASP.NET Core</span><span class="proj-tag">Orchard Core</span><span class="proj-tag">Azure</span><span class="proj-tag">ESRI API</span></div>
+      </div>
+      <div class="project-card">
+        <div class="proj-num">PROJECT 02</div>
+        <div class="proj-title">Integrated Transport ERP</div>
+        <div class="proj-desc">Full logistics ERP for tracking bilty details, delivery status, e-Waybill automation, and WhatsApp notifications. Deployed on IIS.</div>
+        <div class="proj-tags"><span class="proj-tag">ASP.NET MVC</span><span class="proj-tag">SQL Server</span><span class="proj-tag">Web Services</span><span class="proj-tag">IIS</span></div>
+      </div>
+      <div class="project-card">
+        <div class="proj-num">PROJECT 03</div>
+        <div class="proj-title">Comprehensive School ERP</div>
+        <div class="proj-desc">Complete school platform - online exams, fees, assignments, mark sheet generation, and notification alerts for students and teachers.</div>
+        <div class="proj-tags"><span class="proj-tag">ASP.NET</span><span class="proj-tag">SQL Server</span><span class="proj-tag">Web API</span><span class="proj-tag">Windows App</span></div>
+      </div>
+      <div class="project-card">
+        <div class="proj-num">PROJECT 04</div>
+        <div class="proj-title">Manufacturing ERP System</div>
+        <div class="proj-desc">Company-wide ERP for procurement, production planning, inventory tracking, PO lifecycle management, and cost calculation with React dashboard.</div>
+        <div class="proj-tags"><span class="proj-tag">ASP.NET Core</span><span class="proj-tag">React.js</span><span class="proj-tag">SQL Server</span><span class="proj-tag">REST API</span></div>
+      </div>
+      <div class="project-card">
+        <div class="proj-num">PROJECT 05</div>
+        <div class="proj-title">Purchase Order + CAD Integration</div>
+        <div class="proj-desc">Dynamic PO system generating real-time CAD designs via FreeCAD + Python. Custom dimensions, automated calculations, and web-based order config.</div>
+        <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">FreeCAD</span><span class="proj-tag">React.js</span><span class="proj-tag">ASP.NET Core</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="education">
+  <div class="section-wrap fade-in">
+    <div class="section-label">Academic Background</div>
+    <div class="section-title">Education</div>
+    <div class="edu-grid">
+      <div class="edu-card"><div><div class="edu-deg">Master of Computer Applications (MCA)</div><div class="edu-inst">Sanghavi Institute of Science &amp; Management &middot; RGPV, Indore</div></div><div class="edu-year">2018</div></div>
+      <div class="edu-card"><div><div class="edu-deg">Bachelor of Computer Applications (BCA)</div><div class="edu-inst">St. Singaji Institute of Science &amp; Management &middot; Vikram University</div></div><div class="edu-year">2014 &middot; 69%</div></div>
+      <div class="edu-card"><div><div class="edu-deg">Higher Secondary Certificate (H.S.C.)</div><div class="edu-inst">Govt. HSS Excellence, Nasrullaganj Sehore &middot; M.P. Board</div></div><div class="edu-year">2011 &middot; 60%</div></div>
+      <div class="edu-card"><div><div class="edu-deg">Secondary School Certificate (SSC)</div><div class="edu-inst">Govt. H.S. School, Chhipaner Sehore &middot; M.P. Board</div></div><div class="edu-year">2009 &middot; 54%</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="contact">
+  <div class="section-wrap fade-in">
+    <div class="section-label">Get In Touch</div>
+    <div class="section-title">Contact</div>
+    <div class="contact-box">
+      <div class="contact-title">Let's work together</div>
+      <div class="contact-sub">Open to new opportunities and interesting projects</div>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:praveennamdevpn@gmail.com">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          praveennamdevpn@gmail.com
+        </a>
+        <a class="contact-link" href="tel:9826486982">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+          9826486982
+        </a>
+        <a class="contact-link" href="https://github.com/praveennamdev" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>&copy; 2026 Praveen Namdev &nbsp;&middot;&nbsp; Full Stack .NET Developer &nbsp;&middot;&nbsp; Indore, India</p></footer>
+
+<script>
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
